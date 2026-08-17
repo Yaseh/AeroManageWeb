@@ -35,14 +35,14 @@ Le projet propose **6 fonctionnalités CRUD complètes** (création, consultatio
 ### 1. Cloner le dépôt
 
 ```bash
-git clone <url-du-depot>
-cd "Session learning aerport c"
+git clone https://github.com/Yaseh/AeroManageWeb.git
+cd AeroManageWeb
 ```
 
 ### 2. Installer les dépendances Angular
 
 ```bash
-cd AeroManageWeb/AeroManage.Web
+cd AeroManage.Web
 npm install
 ```
 
@@ -57,10 +57,8 @@ dotnet restore
 
 ## Base de données
 
-La base de données **SQLite** est créée **automatiquement** au premier démarrage de l'API.  
+La base de données **SQLite** est créée **automatiquement** au premier démarrage de l'API.
 Le script `Database/schema.sql` est exécuté par `Program.cs` à chaque lancement — les tables sont créées avec `CREATE TABLE IF NOT EXISTS`, donc les données existantes sont préservées.
-
-> **Note importante** : Si vous avez une base `aeromanag.db` issue d'une version antérieure du projet (colonne `Numerosiege` en `INTEGER`), supprimez le fichier `AeroManageWeb/Database/aeromanag.db` avant de lancer l'API. La base sera recréée automatiquement avec le bon schéma (`Numerosiege TEXT`).
 
 Aucune configuration de chaîne de connexion n'est nécessaire : le chemin relatif est déjà configuré dans `AeroManage.Api/appsettings.json` :
 
@@ -74,14 +72,14 @@ Aucune configuration de chaîne de connexion n'est nécessaire : le chemin relat
 
 ## Lancement du backend
 
-> **Attention** : la commande `dotnet run` doit être exécutée **depuis le dossier `AeroManage.Api`**, pas depuis la racine de la solution.
+> **Attention** : la commande `dotnet run` doit être exécutée **depuis le dossier `AeroManage.Api`**, pas depuis la racine du dépôt.
 
 ```bash
-cd AeroManageWeb/AeroManage.Api
+cd AeroManage.Api
 dotnet run
 ```
 
-L'API démarre sur `http://localhost:5287`.  
+L'API démarre sur `http://localhost:5287`.
 La documentation interactive (Scalar) est accessible à l'adresse :
 
 ```
@@ -92,10 +90,10 @@ http://localhost:5287/scalar/v1
 
 ## Lancement du frontend
 
-> **Attention** : la commande `ng serve` doit être exécutée **depuis le dossier `AeroManage.Web`**, pas depuis la racine de la solution.
+> **Attention** : la commande `ng serve` doit être exécutée **depuis le dossier `AeroManage.Web`**, pas depuis la racine du dépôt.
 
 ```bash
-cd AeroManageWeb/AeroManage.Web
+cd AeroManage.Web
 ng serve
 ```
 
@@ -111,17 +109,17 @@ http://localhost:4200
 
 ## Lancement complet (résumé)
 
-Ouvrez **deux terminaux** :
+Ouvrez **deux terminaux**, tous deux ouverts à la racine du dépôt cloné (`AeroManageWeb/`) :
 
 **Terminal 1 — Backend :**
 ```bash
-cd "chemin/vers/Session learning aerport c/AeroManageWeb/AeroManage.Api"
+cd AeroManage.Api
 dotnet run
 ```
 
 **Terminal 2 — Frontend :**
 ```bash
-cd "chemin/vers/Session learning aerport c/AeroManageWeb/AeroManage.Web"
+cd AeroManage.Web
 ng serve
 ```
 
@@ -158,7 +156,7 @@ AeroManageWeb/
 ├── AeroManage.Web/                ← Frontend Angular 21
 │   └── src/app/
 │       ├── components/            ← Un composant par entité (signals, @if/@for)
-│       ├── Services/              ← Services HTTP (HttpClient + Observables)
+│       ├── Services/               ← Services HTTP (HttpClient + Observables)
 │       ├── models/                ← Interfaces TypeScript (camelCase)
 │       ├── app.routes.ts          ← Routage Angular
 │       └── app.html               ← Layout principal (sidebar + router-outlet)
