@@ -1,0 +1,35 @@
+<div>
+  <h1>Aéroports</h1>
+
+  @if (erreur()) {
+    <p style="color: red;">{{ erreur() }}</p>
+  }
+
+  <button (click)="ouvrirFormulaire()">+ Ajouter un aéroport</button>
+
+  @if (afficherFormulaire()) {
+    <form [formGroup]="aeroportForm" (ngSubmit)="soumettre()">
+      <h2>{{ modeEdition() ? 'Modifier aéroport' : 'Nouvel aéroport' }}</h2>
+      <input formControlName="idIata" placeholder="Code IATA (ex: CDG)">
+      <input formControlName="nom" placeholder="Nom">
+      <input formControlName="ville" placeholder="Ville">
+      <input formControlName="pays" placeholder="Pays">
+      <button type="submit" [disabled]="aeroportForm.invalid">
+        {{ modeEdition() ? 'Mettre à jour' : 'Ajouter' }}
+      </button>
+      <button type="button" (click)="fermerFormulaire()">Annuler</button>
+    </form>
+  }
+
+  <ul>
+    @for (aeroport of aeroports(); track aeroport.idIata) {
+      <li>
+        {{ aeroport.idIata }} — {{ aeroport.nom }} — {{ aeroport.ville }} — {{ aeroport.pays }}
+        <button (click)="ouvrirEdition(aeroport)">Modifier</button>
+        <button (click)="supprimer(aeroport.idIata)">Supprimer</button>
+      </li>
+    } @empty {
+      <li>Aucun aéroport.</li>
+    }
+  </ul>
+</div>

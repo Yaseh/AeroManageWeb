@@ -1,0 +1,44 @@
+<div>
+  <h1>Avions</h1>
+
+  @if (erreur()) {
+    <p style="color: red;">{{ erreur() }}</p>
+  }
+
+  <button (click)="ouvrirFormulaire()">+ Ajouter un avion</button>
+
+  @if (afficherFormulaire()) {
+    <form [formGroup]="avionForm" (ngSubmit)="soumettre()">
+      <h2>{{ modeEdition() ? 'Modifier avion' : 'Nouvel avion' }}</h2>
+      <select formControlName="model">
+  <option value="">-- Choisir un modèle --</option>
+  <option value="Airbus A320">Airbus A320</option>
+  <option value="Airbus A380">Airbus A380</option>
+  <option value="Boeing 737">Boeing 737</option>
+  <option value="Boeing 777">Boeing 777</option>
+  <option value="Boeing 787">Boeing 787</option>
+</select>>
+      <input formControlName="capacite" type="number" placeholder="Capacité">
+      <select formControlName="statut">
+  <option value="En service">En service</option>
+  <option value="Hors service">Hors service</option>
+</select>
+      <button type="submit" [disabled]="avionForm.invalid">
+        {{ modeEdition() ? 'Mettre à jour' : 'Ajouter' }}
+      </button>
+      <button type="button" (click)="fermerFormulaire()">Annuler</button>
+    </form>
+  }
+
+  <ul>
+    @for (avion of avions(); track avion.idAvion) {
+      <li>
+        {{ avion.model }} — {{ avion.capacite }} — {{ avion.statut }}
+        <button (click)="ouvrirEdition(avion)">Modifier</button>
+        <button (click)="supprimer(avion.idAvion)">Supprimer</button>
+      </li>
+    } @empty {
+      <li>Aucun avion.</li>
+    }
+  </ul>
+</div>

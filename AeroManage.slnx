@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="AeroManage.Api/AeroManage.Api.csproj" />
+  <Project Path="AeroManage.Core/AeroManage.Core.csproj" />
+  <Project Path="AeroManage.Infrastructure/AeroManage.Infrastructure.csproj" />
+</Solution>

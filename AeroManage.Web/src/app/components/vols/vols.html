@@ -1,0 +1,61 @@
+<div>
+  <h1>Vols</h1>
+
+  @if (erreur()) {
+    <p style="color: red;">{{ erreur() }}</p>
+  }
+
+  <button (click)="ouvrirFormulaire()">+ Ajouter un vol</button>
+
+  @if (afficherFormulaire()) {
+    <form [formGroup]="volForm" (ngSubmit)="soumettre()">
+      <h2>{{ modeEdition() ? 'Modifier vol' : 'Nouveau vol' }}</h2>
+      <input formControlName="numeroVol" placeholder="Numéro de vol">
+      <input formControlName="dateDepart" placeholder="Date départ (ex: 2025-01-15)">
+      <input formControlName="dateArrivee" placeholder="Date arrivée (ex: 2025-01-15)">
+      <input formControlName="statut" placeholder="Statut">
+      
+<select formControlName="aeroportDepart">
+  <option value="">-- Aéroport de départ --</option>
+  @for (aeroport of aeroportsDisponibles(); track aeroport.idIata) {
+    <option [value]="aeroport.idIata">{{ aeroport.idIata }} — {{ aeroport.nom }}</option>
+  }
+</select>
+      <select formControlName="aeroportArrivee">
+  <option value="">-- Aéroport d'arrivée --</option>
+  @for (aeroport of aeroportsDisponibles(); track aeroport.idIata) {
+    <option [value]="aeroport.idIata">{{ aeroport.idIata }} — {{ aeroport.nom }}</option>
+  }
+</select>
+      <select formControlName="idAvion">
+  <option [value]="null">-- Choisir un avion --</option>
+  @for (avion of avionsDisponibles(); track avion.idAvion) {
+    <option [value]="avion.idAvion">{{ avion.model }}</option>
+  }
+</select>
+     <select formControlName="idCommandant">
+  <option [value]="null">-- Choisir un commandant --</option>
+  @for (personnel of commandantsDisponibles(); track personnel.idPersonnel) {
+    <option [value]="personnel.idPersonnel">{{ personnel.nom }} {{ personnel.prenom }}</option>
+  }
+</select>
+      <button type="submit" [disabled]="volForm.invalid">
+        {{ modeEdition() ? 'Mettre à jour' : 'Ajouter' }}
+      </button>
+      <button type="button" (click)="fermerFormulaire()">Annuler</button>
+    </form>
+  }
+
+  <ul>
+    @for (vol of vols(); track vol.idVol) {
+      <li>
+        {{ vol.numeroVol }} — {{ vol.dateDepart }} → {{ vol.dateArrivee }} — {{ vol.statut }}
+        ({{ vol.aeroportDepart }} → {{ vol.aeroportArrivee }})
+        <button (click)="ouvrirEdition(vol)">Modifier</button>
+        <button (click)="supprimer(vol.idVol)">Supprimer</button>
+      </li>
+    } @empty {
+      <li>Aucun vol.</li>
+    }
+  </ul>
+</div>

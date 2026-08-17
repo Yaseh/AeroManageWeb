@@ -1,0 +1,34 @@
+<div>
+  <h1>Passagers</h1>
+
+  @if (erreur()) {
+    <p style="color: red;">{{ erreur() }}</p>
+  }
+
+  <button (click)="ouvrirFormulaire()">+ Ajouter un passager</button>
+
+  @if (afficherFormulaire()) {
+    <form [formGroup]="passagerForm" (ngSubmit)="soumettre()">
+      <h2>{{ modeEdition() ? 'Modifier passager' : 'Nouveau passager' }}</h2>
+      <input formControlName="nom" placeholder="Nom">
+      <input formControlName="prenom" placeholder="Prénom">
+      <input formControlName="nationalite" placeholder="Nationalité">
+      <button type="submit" [disabled]="passagerForm.invalid">
+        {{ modeEdition() ? 'Mettre à jour' : 'Ajouter' }}
+      </button>
+      <button type="button" (click)="fermerFormulaire()">Annuler</button>
+    </form>
+  }
+
+  <ul>
+    @for (passager of passagers(); track passager.idPassager) {
+      <li>
+        {{ passager.nom }} {{ passager.prenom }} — {{ passager.nationalite }}
+        <button (click)="ouvrirEdition(passager)">Modifier</button>
+        <button (click)="supprimer(passager.idPassager)">Supprimer</button>
+      </li>
+    } @empty {
+      <li>Aucun passager.</li>
+    }
+  </ul>
+</div>

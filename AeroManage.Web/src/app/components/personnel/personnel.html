@@ -1,0 +1,40 @@
+<div>
+  <h1>Personnel</h1>
+
+  @if (erreur()) {
+    <p style="color: red;">{{ erreur() }}</p>
+  }
+
+  <button (click)="ouvrirFormulaire()">+ Ajouter un membre du personnel</button>
+
+  @if (afficherFormulaire()) {
+    <form [formGroup]="personnelForm" (ngSubmit)="soumettre()">
+      <h2>{{ modeEdition() ? 'Modifier personnel' : 'Nouveau personnel' }}</h2>
+      <input formControlName="nom" placeholder="Nom">
+      <input formControlName="prenom" placeholder="Prénom">
+      <select formControlName="role">
+  <option value="">-- Choisir un rôle --</option>
+  <option value="Commandant">Commandant de bord</option>
+  <option value="Copilote">Copilote</option>
+  <option value="Chef de cabine">Chef de cabine</option>
+  <option value="Hotesse">Hôtesse / Steward</option>
+</select>
+      <button type="submit" [disabled]="personnelForm.invalid">
+        {{ modeEdition() ? 'Mettre à jour' : 'Ajouter' }}
+      </button>
+      <button type="button" (click)="fermerFormulaire()">Annuler</button>
+    </form>
+  }
+
+  <ul>
+    @for (p of personnels(); track p.idPersonnel) {
+      <li>
+        {{ p.nom }} {{ p.prenom }} — {{ p.role }}
+        <button (click)="ouvrirEdition(p)">Modifier</button>
+        <button (click)="supprimer(p.idPersonnel)">Supprimer</button>
+      </li>
+    } @empty {
+      <li>Aucun personnel.</li>
+    }
+  </ul>
+</div>

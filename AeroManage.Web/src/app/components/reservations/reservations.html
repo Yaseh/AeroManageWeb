@@ -1,0 +1,44 @@
+<div>
+  <h1>Réservations</h1>
+
+  @if (erreur()) {
+    <p style="color: red;">{{ erreur() }}</p>
+  }
+
+  <button (click)="ouvrirFormulaire()">+ Ajouter une réservation</button>
+
+  @if (afficherFormulaire()) {
+    <form [formGroup]="reservationForm" (ngSubmit)="soumettre()">
+      <h2>{{ modeEdition() ? 'Modifier réservation' : 'Nouvelle réservation' }}</h2>
+      <input formControlName="numerosiege" placeholder="Numéro de siège (ex: 14C)">
+      <select formControlName="idVol">
+  <option [value]="null">-- Choisir un vol --</option>
+  @for (vol of volsDisponibles(); track vol.idVol) {
+    <option [value]="vol.idVol">{{ vol.numeroVol }}</option>
+  }
+</select>
+      <select formControlName="idPassager">
+  <option [value]="null">-- Choisir un passager --</option>
+  @for (passager of passagersDisponibles(); track passager.idPassager) {
+    <option [value]="passager.idPassager">{{ passager.nom }} {{ passager.prenom }}</option>
+  }
+</select>>
+      <button type="submit" [disabled]="reservationForm.invalid">
+        {{ modeEdition() ? 'Mettre à jour' : 'Ajouter' }}
+      </button>
+      <button type="button" (click)="fermerFormulaire()">Annuler</button>
+    </form>
+  }
+
+  <ul>
+    @for (reservation of reservations(); track reservation.idReservation) {
+      <li>
+        Siège {{ reservation.numerosiege }} — Vol #{{ reservation.idVol }} — Passager #{{ reservation.idPassager }}
+        <button (click)="ouvrirEdition(reservation)">Modifier</button>
+        <button (click)="supprimer(reservation.idReservation)">Supprimer</button>
+      </li>
+    } @empty {
+      <li>Aucune réservation.</li>
+    }
+  </ul>
+</div>
