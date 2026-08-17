@@ -11,8 +11,8 @@
     <form [formGroup]="volForm" (ngSubmit)="soumettre()">
       <h2>{{ modeEdition() ? 'Modifier vol' : 'Nouveau vol' }}</h2>
       <input formControlName="numeroVol" placeholder="Numéro de vol">
-      <input formControlName="dateDepart" placeholder="Date départ (ex: 2025-01-15)">
-      <input formControlName="dateArrivee" placeholder="Date arrivée (ex: 2025-01-15)">
+       <input formControlName="dateDepart" type="date">
+      <input formControlName="dateArrivee" type="date">
       <input formControlName="statut" placeholder="Statut">
       
 <select formControlName="aeroportDepart">
